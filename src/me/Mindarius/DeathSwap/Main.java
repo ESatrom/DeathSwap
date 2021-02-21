@@ -23,8 +23,9 @@ public class Main extends JavaPlugin {
 	public static boolean doubleFirstInterval = false;
 	public static boolean startFreeze = true;
 	public static boolean anyStart = false;
+	public static boolean randomStart = true;
 	public static int intervalSeconds = 20*60*5;
-	public static int radius = 10000;
+	public static int radius = 4000;
 	
 	private Ticker ticker;
 	public List<Player> players = new ArrayList<>();

@@ -26,6 +26,7 @@ public class CommandStart implements CommandExecutor {
 		plugin.getServer().broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "DeathSwap interval: " + Math.floor(Main.intervalSeconds/0.6)/100.0 + " minutes!");
 		plugin.players.clear();
 		for(Player p : plugin.getServer().getOnlinePlayers()) {
+			if(Main.randomStart) { plugin.getServer().dispatchCommand(p, "rtp"); }
 			plugin.players.add(p);
 			p.setHealth(20);
 			p.setFoodLevel(20);

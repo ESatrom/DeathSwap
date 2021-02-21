@@ -17,7 +17,8 @@ public class CommandRule implements CommandExecutor {
 			sender.sendMessage("doubleFirst <true/false> - whether or not to double the interval before the first swap. For those who want prep time.\n"
 					+ "freeze <true/false> - whether or not to freeze players upon the start command being issued, giving a countdown to game start.\n"
 					+ "anyoneStart <true/false> - whether or not to allow anyone to use /start.\n"
-					+ "radius <number> - half side-length of the square centered on world spawn in which RTP will place players.\n"
+					+ "randomStart <true/false> - whether or not to rtp all players on start (opposed to a swap).\n"
+					+ "radius <number> - half side-length of the square centered on world spawn in which RTP will place players. A larger radius can cause more lag due to need to load teleport target location.\n"
 					+ "interval <number>- the duration in seconds between each swap.");
 			return true;
 		}
@@ -27,6 +28,13 @@ public class CommandRule implements CommandExecutor {
 			try {
 				Main.doubleFirstInterval = bool(args[1]);
 				sender.sendMessage("doubleFirst set to " + bool(args[1]));
+			}
+			catch(IllegalArgumentException e) { return false; }
+			break;
+		case "randomstart":
+			try {
+				Main.randomStart = bool(args[1]);
+				sender.sendMessage("randomStart set to " + bool(args[1]));
 			}
 			catch(IllegalArgumentException e) { return false; }
 			break;
