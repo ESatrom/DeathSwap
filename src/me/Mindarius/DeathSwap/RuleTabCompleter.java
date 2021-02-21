@@ -18,7 +18,7 @@ public class RuleTabCompleter implements TabCompleter {
 			result.add("radius");
 			result.add("freeze");
 			result.add("doubleFirst");
-		} else if(args[0].equalsIgnoreCase("doublefirst")||args[0].equalsIgnoreCase("freeze")||args[0].equalsIgnoreCase("anyonestart")) {
+		} else if(args.length==2&&(args[0].equalsIgnoreCase("doublefirst")||args[0].equalsIgnoreCase("freeze")||args[0].equalsIgnoreCase("anyonestart"))) {
 			result.add("false");
 			result.add("true");
 		}

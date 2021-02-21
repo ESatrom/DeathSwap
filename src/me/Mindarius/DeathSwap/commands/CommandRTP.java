@@ -23,7 +23,7 @@ public class CommandRTP implements CommandExecutor {
 		Player p = (Player) sender;
 		World w = p.getWorld();
 		Location target = null;
-		while(target==null||w.getBlockAt(target).getType().equals(Material.WATER)||w.getBlockAt(target).getType().equals(Material.LAVA)) {
+		while(target==null||w.getBlockAt(target.add(0, -1, 0)).getType().equals(Material.WATER)||!w.getBlockAt(target).getType().equals(Material.AIR)) {
 			target = w.getHighestBlockAt(w.getSpawnLocation().add(r.nextInt(Main.radius*2)-Main.radius, 0, r.nextInt(Main.radius*2)-Main.radius)).getLocation().add(0, 1, 0);
 		}
 		p.teleport(target);

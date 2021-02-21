@@ -65,7 +65,6 @@ public class CommandRule implements CommandExecutor {
 	}
 	
 	private boolean bool(String in) throws IllegalArgumentException {
-		System.out.println("\""+in.toLowerCase()+"\"");
 		switch(in.toLowerCase()) {
 		case "y":
 		case "yes":

@@ -22,7 +22,7 @@ public class CommandStart implements CommandExecutor {
 			sender.sendMessage("§cInsufficient permissions to perform command.");
 			return true;
 		}
-		plugin.getServer().dispatchCommand(sender, "advancement revoke @a everything");
+		plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "advancement revoke @a everything");
 		plugin.getServer().broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "DeathSwap interval: " + Math.floor(Main.intervalSeconds/0.6)/100.0 + " minutes!");
 		plugin.players.clear();
 		for(Player p : plugin.getServer().getOnlinePlayers()) {

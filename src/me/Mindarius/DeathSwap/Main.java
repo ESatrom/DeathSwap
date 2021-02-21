@@ -31,7 +31,8 @@ public class Main extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-		Saver.load(getDataFolder());
+		if(!getDataFolder().exists()) { try { getDataFolder().mkdir(); } catch (Exception e) { } }
+		Saver.load(getDataFolder().getPath());
 		getCommand("Start").setExecutor(new CommandStart(this));
 		getCommand("Rule").setExecutor(new CommandRule(this));
 		getCommand("Rule").setTabCompleter(new RuleTabCompleter());
@@ -42,13 +43,17 @@ public class Main extends JavaPlugin {
 		}, 0, 20);
 	}
 	
-	@Override public void onDisable() { Saver.save(getDataFolder());}
+	@Override public void onDisable() { Saver.save(getDataFolder().getPath());}
 	
 	public void swap() {
 		Random r = new Random();
 		List<Location> locs = new ArrayList<>();
 		for(Player p : players) {
 			locs.add(p.getLocation());
+		}
+		if(locs.size()<=1) {
+			getServer().broadcastMessage("§cNot enough players for DeathSwap (Min 2)");
+			return;
 		}
 		boolean happy = false;
 		while(!happy) {
