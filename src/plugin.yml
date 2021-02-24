@@ -1,6 +1,6 @@
 main: me.Mindarius.DeathSwap.Main
 name: DeathSwap
-version: 1.1.2
+version: 1.1.3
 author: Mindarius
 description: Play DeathSwap!
 prefix: DS
@@ -13,7 +13,7 @@ permissions:
 commands:
    Start:
       description: Initiate the DeathSwap! (clears all player inventories). Default swap interval is 5 minutes.
-      usage: /start
+      usage: /start - cannot be used during a game.
    Rule:
       description: Change a setting for DeathSwap.
       usage: /rule [rule] [value] | /rule <help> lists available rules.
@@ -21,3 +21,6 @@ commands:
    Rtp:
       description: Teleports sender to a random safe(ish) location
       usage: /Rtp - Can only be used by a player not in game.
+   Spec:
+      description: Spectate a player still in the game
+      usage: /Spec [Player in game] - Can only be used by a player in spectator
