@@ -25,22 +25,23 @@ import me.Mindarius.DeathSwap.commands.DSCommand;
  */
 public class Main extends JavaPlugin {
 	
-	public static boolean 	doubleFirstInterval = false,
+	private static boolean 	doubleFirstInterval = false,
 							startFreeze = true,
 							anyStart = false,
 							randomStart = true; //Boolean game settings
-	public static int 	intervalSeconds = 300,
+	private static int 	intervalSeconds = 300,
 						killInterval = 10,
 						radius = 4000; //Integer game settings
 
-	public static Random r = new Random(); //A random, for random numbers
+	private static final Random r = new Random(); //A random, for random numbers
 	private static Ticker ticker; //The ticker, handles passive plugin operations (countdowns & stuff)
 	private static Main main; //The plugin, as there should only ever be one in an instance of a server this is made static
+	private static Server server;
 	
-	public static List<Player> players = new ArrayList<>(); //List of players still in the game
-	public static Map<Player, Player> swapList = new HashMap<Player, Player>(); //Key: player that was swapped, Value: player they were last swapped to.
+	private static List<Player> players = new ArrayList<>(); //List of players still in the game
+	private static Map<Player, Player> swapList = new HashMap<Player, Player>(); //Key: player that was swapped, Value: player they were last swapped to.
 	
-	public Main() { main = this; }
+	public Main() { main = this; server = main.getServer(); }
 	
 	@Override
 	public void onEnable() {
@@ -52,7 +53,7 @@ public class Main extends JavaPlugin {
 				new CommandSpec()); //register all the commands
 		server().getPluginManager().registerEvents(new ListenerElimination(), this); //Register the elimination listener
 		server().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			@Override public void run() { if(ticker!=null) { ticker.tick(); } }
+			@Override public void run() { if(ticker()!=null) { ticker().tick(); } }
 		}, 0, 20); //Set it up so that the ticker will tick every second if it exists.
 	}
 	
@@ -62,7 +63,7 @@ public class Main extends JavaPlugin {
 	public static void swap() {
 		List<Location> locs = new ArrayList<>(); //(to be) Locations of all players in game
 		List<Player> ps = new ArrayList<>(); //(to be) players in corresponding order to locations list
-		for(Player p : players) { //repeat for all in-game players
+		for(Player p : getPlayers()) { //repeat for all in-game players
 			locs.add(p.getLocation());
 			ps.add(p);
 		}
@@ -72,7 +73,7 @@ public class Main extends JavaPlugin {
 		}
 		boolean uniqueLocations = false;
 		while(!uniqueLocations) {
-			int from = r.nextInt(locs.size()), to = r.nextInt(locs.size()); //Select random to/from positions
+			int from = rInt(locs.size()), to = rInt(locs.size()); //Select random to/from positions
 			locs.add(to, locs.remove(from)); //switches position of a location according to the predetermined random values
 			ps.add(to, ps.remove(from)); //matches player list positions to location list positions
 			uniqueLocations=true;
@@ -80,7 +81,7 @@ public class Main extends JavaPlugin {
 		}
 		for(int i = 0; i < players.size(); i++) {
 			players.get(i).teleport(locs.get(i)); //teleport player
-			swapList.put(players.get(i), ps.get(i)); //log teleport target
+			getSwapList().put(players.get(i), ps.get(i)); //log teleport target
 		}
 	}
 	
@@ -89,19 +90,46 @@ public class Main extends JavaPlugin {
 	/** End the game */
 	public static void endTicker() { 
 		ticker = null;
-		swapList.clear();
+		getSwapList().clear();
 	}
 
 	/** @return the object of the plugin */
 	public static Main get() { return main; }
 	/** @return the server */
-	public static Server server() { return main.getServer(); }
+	public static Server server() { return server; }
+	public static Ticker ticker() { return ticker; }
+	/** @return an int between 0 (inclusive) and upperBound (exclusive) */
+	public static int rInt(int upperBound) { return r.nextInt(upperBound); }
 	
 	/** @param commands - registered by method*/
 	private void registerCommands(DSCommand... commands) { for(DSCommand c : commands) { this.getCommand(c.getName()).setExecutor(c); } }
 	
 	/**Whether the last swap was recent enough to be considered cause of death*/
-	public static boolean lastSwap() { return ticker.swapTime<killInterval; }
+	public static boolean lastSwap() { return ticker().getSwapTime()<getGRKillInterval(); }
 	/** Whether there is an active game*/
-	public static boolean gameOn() { return players.size()>0; }
+	public static boolean gameOn() { return getPlayers().size()>0; }
+
+	public static boolean isGRDoubleFirst() { return doubleFirstInterval; }
+	public static void setGRDoubleFirst(boolean doubleFirstInterval) { Main.doubleFirstInterval = doubleFirstInterval; }
+
+	public static boolean isGRAnyStart() { return anyStart; }
+	public static void setGRAnyStart(boolean anyStart) { Main.anyStart = anyStart; }
+
+	public static boolean isGRRandomStart() { return randomStart; }
+	public static void setGRRandomStart(boolean randomStart) { Main.randomStart = randomStart; }
+
+	public static int getGRInterval() { return intervalSeconds; }
+	public static void setGRInterval(int intervalSeconds) { Main.intervalSeconds = intervalSeconds; }
+
+	public static int getGRKillInterval() { return killInterval; }
+	public static void setGRKillInterval(int killInterval) { Main.killInterval = killInterval; }
+
+	public static int getGRRadius() { return radius; }
+	public static void setGRRadius(int radius) { Main.radius = radius; }
+
+	public static boolean isGRFreeze() { return startFreeze; }
+	public static void setGRFreeze(boolean startFreeze) { Main.startFreeze = startFreeze; }	
+
+	public static List<Player> getPlayers() { return players; }
+	public static Map<Player, Player> getSwapList() { return swapList; }
 }

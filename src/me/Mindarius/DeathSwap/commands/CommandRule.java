@@ -25,49 +25,49 @@ public class CommandRule extends DSCommand {
 		switch(args[0].toLowerCase()) { //Switches on the supplied rule, same process for each setting
 		case "doublefirst": //Check what it be
 			try {
-				Main.doubleFirstInterval = bool(args[1]); //Set the thing to provided value
+				Main.setGRDoubleFirst(bool(args[1])); //Set the thing to provided value
 				sender.sendMessage("doubleFirst set to " + bool(args[1])); //Echo to sender
 			}
 			catch(IllegalArgumentException e) { return false; } //If they gave me a bad value I will complain to them
 			break; //Close this off so it doesn't try doing another setting with this value.
 		case "randomstart":
 			try {
-				Main.randomStart = bool(args[1]);
+				Main.setGRRandomStart(bool(args[1]));
 				sender.sendMessage("randomStart set to " + bool(args[1]));
 			}
 			catch(IllegalArgumentException e) { return false; }
 			break;
 		case "anyonestart":
 			try {
-				Main.anyStart = bool(args[1]);
+				Main.setGRAnyStart(bool(args[1]));
 				sender.sendMessage("anyoneStart set to " + bool(args[1]));
 			}
 			catch(IllegalArgumentException e) { return false; }
 			break;
 		case "freeze":
 			try {
-				Main.startFreeze = bool(args[1]);
+				Main.setGRFreeze(bool(args[1]));
 				sender.sendMessage("freeze set to " + bool(args[1]));
 			}
 			catch(IllegalArgumentException e) { return false; }
 			break;
 		case "radius":
 			try {
-				Main.radius = Integer.parseInt(args[1]); 
+				Main.setGRRadius(Integer.parseInt(args[1])); 
 				sender.sendMessage("Spawn radius set to " + Integer.parseInt(args[1]));
 			}
 			catch(NumberFormatException e) { return false; }
 			break;
 		case "interval":
 			try {
-				Main.intervalSeconds = Integer.parseInt(args[1]); 
+				Main.setGRInterval(Integer.parseInt(args[1])); 
 				sender.sendMessage("Interval set to " + Integer.parseInt(args[1]) + " seconds");
 			}
 			catch(NumberFormatException e) { return false; }
 			break;
 		case "killinterval":
 			try {
-				Main.killInterval = Integer.parseInt(args[1]); 
+				Main.setGRKillInterval(Integer.parseInt(args[1])); 
 				sender.sendMessage("killInterval set to " + Integer.parseInt(args[1]) + " seconds");
 			}
 			catch(NumberFormatException e) { return false; }

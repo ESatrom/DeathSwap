@@ -32,25 +32,25 @@ public class ListenerElimination implements Listener {
 	 * @return whether the player was in game
 	 */
 	private boolean eliminate(Player p) {
-		if(Main.players.remove(p)) { //Checks that the player was in-game
-			Player ender = Main.swapList.get(p); //Find who may have killed them
+		if(Main.getPlayers().remove(p)) { //Checks that the player was in-game
+			Player ender = Main.getSwapList().get(p); //Find who may have killed them
 			if(ender==null||!Main.lastSwap()) { //If ender is null, they weren't killed by a swap, lastSwap() checks timestamp of last swap to see if it's close enough.
-				server.broadcastMessage("§c§l" + Main.players.get(0).getDisplayName() + "§c§l has been eliminated!");
+				server.broadcastMessage("§c§l" + Main.getPlayers().get(0).getDisplayName() + "§c§l has been eliminated!");
 			} else {
-				server.broadcastMessage("§c§l" + Main.players.get(0).getDisplayName() + "§c§l has been eliminated by " + ender.getDisplayName() + "§c§l!");
+				server.broadcastMessage("§c§l" + Main.getPlayers().get(0).getDisplayName() + "§c§l has been eliminated by " + ender.getDisplayName() + "§c§l!");
 			}
-			if(Main.players.size()==1) { //One player left at this point indicates a victor
-				server.broadcastMessage(ChatColor.GREEN + "" + ChatColor.BOLD + Main.players.get(0).getDisplayName() + ChatColor.GREEN + "" + ChatColor.BOLD + " has won DeathSwap!");
+			if(Main.getPlayers().size()==1) { //One player left at this point indicates a victor
+				server.broadcastMessage(ChatColor.GREEN + "" + ChatColor.BOLD + Main.getPlayers().get(0).getDisplayName() + ChatColor.GREEN + "" + ChatColor.BOLD + " has won DeathSwap!");
 				Main.endTicker();
 				for(Player p2 : server.getOnlinePlayers()) { p2.setGameMode(GameMode.SURVIVAL); }
-				Main.players.clear();
-				Main.swapList.clear();
-			} else if(Main.players.size()==0) { //No players left indicates I messed up
+				Main.getPlayers().clear();
+				Main.getSwapList().clear();
+			} else if(Main.getPlayers().size()==0) { //No players left indicates I messed up
 				server.broadcastMessage("§cDeathSwap has ended without a victor.");
 				Main.endTicker();
 				for(Player p2 : server.getOnlinePlayers()) { p2.setGameMode(GameMode.SURVIVAL); }
-				Main.players.clear();
-				Main.swapList.clear();
+				Main.getPlayers().clear();
+				Main.getSwapList().clear();
 			}
 			return true;
 		}

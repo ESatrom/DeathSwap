@@ -14,12 +14,12 @@ public class Saver {
 		FileWriter writer; 
 		try {
 			writer = new FileWriter(target); //Establishes writer, following lines add game settings to file
-			writer.write(Main.doubleFirstInterval+" ");
-			writer.write(Main.anyStart+" ");
-			writer.write(Main.startFreeze+" ");
-			writer.write(Main.radius+" ");
-			writer.write(Main.intervalSeconds+" ");
-			writer.write(Main.killInterval+" ");
+			writer.write(Main.isGRDoubleFirst()+" ");
+			writer.write(Main.isGRAnyStart()+" ");
+			writer.write(Main.isGRFreeze()+" ");
+			writer.write(Main.getGRRadius()+" ");
+			writer.write(Main.getGRInterval()+" ");
+			writer.write(Main.getGRKillInterval()+" ");
 			writer.close(); //cleaning up, less resource draw this way.
 		} catch (Exception e) { System.err.println("DeathSwap settings may not have saved correctly."); } //Catch-alls like this are bad practice, but it will be easier on the eyes of a user who won't be able to change the code.
 	}
@@ -28,12 +28,12 @@ public class Saver {
 		if(!target.exists()) { return; } //Don't try loading a non-existant file
 		try {
 			Scanner scan = new Scanner(target); //Establishes scanner. Following lines load in game settings
-			Main.doubleFirstInterval = scan.nextBoolean();
-			Main.anyStart = scan.nextBoolean();
-			Main.startFreeze = scan.nextBoolean();
-			Main.radius = scan.nextInt();
-			Main.intervalSeconds = scan.nextInt();
-			Main.killInterval = scan.nextInt();
+			Main.setGRDoubleFirst(scan.nextBoolean());
+			Main.setGRAnyStart(scan.nextBoolean());
+			Main.setGRFreeze(scan.nextBoolean());
+			Main.setGRRadius(scan.nextInt());
+			Main.setGRInterval(scan.nextInt());
+			Main.setGRKillInterval(scan.nextInt());
 			scan.close(); //cleaning up, less resource draw this way.
 		} catch (Exception e) { System.err.println("DeathSwap settings may not have loaded correctly. This can be caused by updating the plugin."); } //Catch-alls like this are bad practice, but it will be easier on the eyes of a user who won't be able to change the code.
 	}

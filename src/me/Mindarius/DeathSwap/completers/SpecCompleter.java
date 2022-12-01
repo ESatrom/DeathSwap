@@ -15,7 +15,7 @@ public class SpecCompleter implements TabCompleter {
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		List<String> result = new ArrayList<>();
 		if(args.length==1) { //We only need stuff for the first argument.
-			for(Player p : Main.players) { result.add(p.getDisplayName()); } //Gives all in-game players
+			for(Player p : Main.getPlayers()) { result.add(p.getDisplayName()); } //Gives all in-game players
 		}
 		return result;
 	}

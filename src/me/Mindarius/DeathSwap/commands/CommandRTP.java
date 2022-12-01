@@ -37,9 +37,9 @@ public class CommandRTP extends DSCommand {
 		biomeBlackList.add(Biome.DESERT_LAKES);
 		int tries = 0;
 		while(target==null||biomeBlackList.contains(w.getBiome(target.getBlockX(), target.getBlockY(), target.getBlockZ()))) { //Repeat until you get a good location
-			target = w.getHighestBlockAt(w.getSpawnLocation().add(Main.r.nextInt(Main.radius*2)-Main.radius, 0, Main.r.nextInt(Main.radius*2)-Main.radius)).getLocation().add(0, 1, 0);
+			target = w.getHighestBlockAt(w.getSpawnLocation().add(Main.rInt(Main.getGRRadius()*2)-Main.getGRRadius(), 0, Main.rInt(Main.getGRRadius()*2)-Main.getGRRadius())).getLocation().add(0, 1, 0);
 			tries++;
-			if(tries>=Main.radius) {
+			if(tries>=Main.getGRRadius()) {
 				sender.sendMessage("Couldn't find a suitable starting location in a reasonable amount of tries, this may have been caused due to too small an RTP radius. If you know your radius is wide enough, just try again.");
 				break; //If it takes too long to RTP someone, just stop instead of possibly crashing the server.
 			}
